@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admission-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: admission-app
+  template:
+    metadata:
+      labels:
+        app: admission-app
+    spec:
+      containers:
+      - name: admission-container
+        # REPLACE 'youruser' with your DockerHub username
+        image: blute122/admission-portal:latest 
+        ports:
+        - containerPort: 5000

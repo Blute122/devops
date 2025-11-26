@@ -1,0 +1,18 @@
+- name: Configure Admission Portal Environment
+  hosts: all
+  become: yes
+  tasks:
+    - name: Create SSL Directory
+      file:
+        path: /etc/ssl/admission_app
+        state: directory
+        mode: '0755'
+
+    - name: Generate Self-Signed SSL Certificate
+      command: >
+        openssl req -x509 -nodes -days 365 -newkey rsa:2048
+        -keyout /etc/ssl/admission_app/nginx-selfsigned.key
+        -out /etc/ssl/admission_app/nginx-selfsigned.crt
+        -subj "/C=IN/ST=Karnataka/L=Bengaluru/O=College/OU=IT/CN=admission.local"
+      args:
+        creates: /etc/ssl/admission_app/nginx-selfsigned.crt
